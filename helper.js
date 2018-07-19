@@ -9,7 +9,9 @@ function initCap(str) {
 module.exports = function (str) {
   const lc = str.toLowerCase();
   const subStr1 = "adoption pending";
-  const subStr2 = "adopted";
+  const subStr2 = "pending adoption";
+  const subStr3 = "adopted";
+  //make a switch? 
   if (lc.match(subStr1)) {
     //console.log("name needs fixing");
     const fixed = lc.replace(subStr1, '');
@@ -17,6 +19,11 @@ module.exports = function (str) {
   } else if (lc.match(subStr2)) {
     //console.log("name needs fixing");
     const fixed = lc.replace(subStr2, '');
+    return initCap(fixed);
+  }
+  else if (lc.match(subStr3)) {
+    //console.log("name needs fixing");
+    const fixed = lc.replace(subStr3, '');
     return initCap(fixed);
   }
   else {
