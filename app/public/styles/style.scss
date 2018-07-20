@@ -1,0 +1,13 @@
+
+
+
+//dealing with sticky footer and Flexbox
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}

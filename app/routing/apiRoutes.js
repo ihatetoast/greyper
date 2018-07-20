@@ -3,12 +3,12 @@ const cheerio = require('cheerio');
 const nameFix = require('../../helper.js');
 
 module.exports = function (app) {
-  app.get("/", function (req, res) {
+  app.get("/api", function (req, res) {
     res.send("I'm scrapin'.");
   });
 
   //GALT: GREYHOUND ADOPTION LEAGUE OF TEXAS
-  app.get("/galt", function (req, res) {
+  app.get("/api/galt", function (req, res) {
     // res.send("greyhound adoption league of texas");
 
     request(`http://galtx.org/hounds/available.shtml`, function (err, response, html) {
