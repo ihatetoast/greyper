@@ -4,12 +4,17 @@ Building a scraper for images of greyhounds currently available.
 
 ### Toolbox: 
 
+- HTML5
+- CSS3
+- Sass
+- JavaScript
+- jQuery
 - NodeJS
 - Cheerio
 - Request
 
 ---
-Adoption groups scraped (update as needed):
+Adoption groups to scrape (mebbeh):
 
 - [x] GALT: Greyhound Adoption League of Texas
 - [ ] GALT-CenTex: Greyhound Adoption League of Texas (ATX)
