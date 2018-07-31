@@ -1,12 +1,9 @@
 # Greyper: a greyhound scraper
 
-Building a scraper for images of greyhounds currently available. 
+Building an api that scrapes for images of greyhounds currently available. This will build as I go. This is a work of love, since I am an active greyhound adoption volunteer. My goal is to get all of the groups across the world included. This is not to have people avoid their local groups, but for those who just want to ooh aah over the Needle-noses or use greyhound snooters in an app.
 
 ### Toolbox: 
 
-- HTML5
-- CSS3
-- Sass
 - JavaScript
 - jQuery
 - NodeJS

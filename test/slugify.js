@@ -18,5 +18,13 @@ describe("Slugify", function () {
     function () {
       expect(slugify("Dolly ")).to.equal("dolly")
     });
+  it("should replace letters that have diacritical marks with ones without (ex. o for ö.",
+    function () {
+      expect(slugify("göthe")).to.equal("gothe")
+    });
+  it("should remove .shtml",
+    function () {
+      expect(slugify("einstein.shtml")).to.equal("einstein")
+    });
 
 })

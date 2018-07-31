@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 
 //TODO: functions rewritten after tests. also renamed. 
 //apply new fcns here. 
-import { yoYoMa, initCap, removeAccentsStr, deleteExtraText, slugify } from "../../helpers/helpers";
+import { yoYoMa, initCap, deleteExtraText, slugify } from "../../helpers/helpers";
 
 module.exports = function (app) {
 
@@ -14,8 +14,10 @@ module.exports = function (app) {
     console.log(yoYoMa());
   });
 
+  const subStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
+
   //GALT: GREYHOUND ADOPTION LEAGUE OF TEXAS
-  const galtSubStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
+
   app.get("/api/galt", function (req, res) {
 
     request(`http://galtx.org/hounds/available.shtml`, function (err, response, html) {
@@ -24,12 +26,10 @@ module.exports = function (app) {
         var houndDataGalt = [];
         $("ul.media-grid li").each(function (i, el) {
           var nameData = $(el).text().trim();
-          var fixedName = deleteExtraText(nameData, galtSubStrings);
+          var fixedName = deleteExtraText(nameData, subStrings);
           var name = initCap(fixedName) || "Cheyenne";
           var a = $(el).children().attr("href");
-          var nameUrl = a.replace('.shtml', '');
-          var noaccents = removeAccentsStr(nameUrl);
-          var slug = slugify(noaccents);
+          var slug = slugify(a);
           var link = `http://galtx.org/hounds/${a}`;
           var img = `http://galtx.org/images/hounds/${slug}_thm.jpg`;
           var houndMeta = { name, link, img };
@@ -42,7 +42,6 @@ module.exports = function (app) {
   });
 
   //GALT-CENTEX: GREYHOUND ADOPTION LEAGUE OF TEXAS CENTRAL TEXAS 
-  const cenTexSubStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
   app.get("/api/centex", function (req, res) {
     // res.send("greyhound adoption league of texas CENTRAL TEXAS");
     request(`https://galtx-centex.org/greyhounds/`, function (err, response, html) {
@@ -51,11 +50,9 @@ module.exports = function (app) {
         var houndDataCenTex = [];
         $("a.thumbnail").each(function (i, el) {
           var nameData = $(el).text().trim();
-          var fixedName = deleteExtraText(nameData, cenTexSubStrings);
+          var fixedName = deleteExtraText(nameData, subStrings);
           var name = initCap(fixedName);
-          var namelc = fixedName.toLowerCase();
-          var noaccents = removeAccentsStr(namelc);
-          var nameUrl = slugify(noaccents);
+          var nameUrl = slugify(fixedName);
           var link = `https://galtx-centex.org/greyhounds/${nameUrl}`;
           var img = `https://galtx-centex.org/img/thm/${nameUrl}.jpg`;
           var houndMeta = { name, link, img };
