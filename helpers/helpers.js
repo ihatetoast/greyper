@@ -31,16 +31,17 @@ export function slugify(text) {
 }
 
 //get rid of text that comes up with names:
-export function removeSubstr(str, subStr) {
-  const lcSubStr = subStr.toLowerCase();
+
+export function deleteExtraText(str, arr) {
   const lcStr = str.toLowerCase();
-  let fixed;
-  if (lcStr.match(lcSubStr)) {
-    fixed = lcStr.replace(lcSubStr, '').trim();
-    return fixed;
-  } else {
-    return lcStr;
-  }
+  let fixed = lcStr;
+  arr.forEach((el) => {
+    if (lcStr.match(el)) {
+      const badStr = el;
+      fixed = lcStr.replace(badStr, '').trim();
+      return;
+    }
+  });
   return fixed;
 }
 

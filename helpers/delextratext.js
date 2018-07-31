@@ -3,12 +3,12 @@
 subStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
 const deleteExtraText = function (str, arr) {
   const lcStr = str.toLowerCase();
-  let fixed;
+  let fixed = lcStr;
   arr.forEach((el) => {
     if (lcStr.match(el)) {
-      badStr = el;
+      const badStr = el;
       fixed = lcStr.replace(badStr, '').trim();
-      return fixed;
+      return;
     }
   });
   return fixed;

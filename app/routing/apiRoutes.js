@@ -4,7 +4,7 @@ const cheerio = require('cheerio');
 
 //TODO: functions rewritten after tests. also renamed. 
 //apply new fcns here. 
-import { yoYoMa, initCap, slugify, removeSubstr } from "../../helpers/helpers";
+import { yoYoMa, initCap, slugify, deleteExtraText } from "../../helpers/helpers";
 
 module.exports = function (app) {
 
@@ -14,6 +14,7 @@ module.exports = function (app) {
   // });
 
   //GALT: GREYHOUND ADOPTION LEAGUE OF TEXAS
+  const galtSubStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
   app.get("/api/galt", function (req, res) {
 
     // res.send("greyhound adoption league of texas");
@@ -24,15 +25,13 @@ module.exports = function (app) {
         var houndData = [];
         $("ul.media-grid li").each(function (i, el) {
           var nameData = $(el).text().trim();
-          var name_NoSubStr = removeSubstr(nameData, "Adoption Pending");
-          console.log(name_NoSubStr);
-          //var name = nameFix(nameData);
-          //var nameUrl = name.toLowerCase();
-          //var a = $(el).children().attr("href");
-          //var link = `http://galtx.org/hounds/${a}`;
-          //var img = `http://galtx.org/images/hounds/${nameUrl}_thm.jpg`;
-          //var houndMeta = { name, link, img };
-          houndData.push(name_NoSubStr)
+          var fixedName = deleteExtraText(nameData, galtSubStrings);
+          var name = initCap(fixedName) || "Cheyenne"
+          var a = $(el).children().attr("href");
+          var link = `http://galtx.org/hounds/${a}`;
+          var img = `http://galtx.org/images/hounds/${name}_thm.jpg`;
+          var houndMeta = { name, link, img };
+          houndData.push(houndMeta)
         });
         res.send(houndData);
       }
