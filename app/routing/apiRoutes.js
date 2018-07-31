@@ -4,57 +4,64 @@ const cheerio = require('cheerio');
 
 //TODO: functions rewritten after tests. also renamed. 
 //apply new fcns here. 
-import { yoYoMa, initCap, slugify, deleteExtraText } from "../../helpers/helpers";
+import { yoYoMa, initCap, removeAccentsStr, deleteExtraText, slugify } from "../../helpers/helpers";
 
 module.exports = function (app) {
 
-  // app.get("/api", function (req, res) {
-  //   res.send("I am scrapin', toots.")
-  //   console.log(yoYoMa());
-  // });
+
+  app.get("/api", function (request, response) {
+    response.send("I am scrapin', toots.")
+    console.log(yoYoMa());
+  });
 
   //GALT: GREYHOUND ADOPTION LEAGUE OF TEXAS
   const galtSubStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
   app.get("/api/galt", function (req, res) {
 
-    // res.send("greyhound adoption league of texas");
-
     request(`http://galtx.org/hounds/available.shtml`, function (err, response, html) {
       if (!err && response.statusCode == 200) {
         var $ = cheerio.load(html);
-        var houndData = [];
+        var houndDataGalt = [];
         $("ul.media-grid li").each(function (i, el) {
           var nameData = $(el).text().trim();
           var fixedName = deleteExtraText(nameData, galtSubStrings);
-          var name = initCap(fixedName) || "Cheyenne"
+          var name = initCap(fixedName) || "Cheyenne";
           var a = $(el).children().attr("href");
+          var nameUrl = a.replace('.shtml', '');
+          var noaccents = removeAccentsStr(nameUrl);
+          var slug = slugify(noaccents);
           var link = `http://galtx.org/hounds/${a}`;
-          var img = `http://galtx.org/images/hounds/${name}_thm.jpg`;
+          var img = `http://galtx.org/images/hounds/${slug}_thm.jpg`;
           var houndMeta = { name, link, img };
-          houndData.push(houndMeta)
+          houndDataGalt.push(houndMeta)
         });
-        res.send(houndData);
+        res.send(houndDataGalt);
       }
     });
 
   });
 
   //GALT-CENTEX: GREYHOUND ADOPTION LEAGUE OF TEXAS CENTRAL TEXAS 
+  const cenTexSubStrings = ["adoption pending", "adopted", "pending adoption", "permanent foster"];
   app.get("/api/centex", function (req, res) {
+    // res.send("greyhound adoption league of texas CENTRAL TEXAS");
     request(`https://galtx-centex.org/greyhounds/`, function (err, response, html) {
       if (!err && response.statusCode == 200) {
         var $ = cheerio.load(html);
-        var houndData = [];
+        var houndDataCenTex = [];
         $("a.thumbnail").each(function (i, el) {
           var nameData = $(el).text().trim();
-          var name = nameFix(nameData);
-          var nameUrl = name.toLowerCase();
+          var fixedName = deleteExtraText(nameData, cenTexSubStrings);
+          var name = initCap(fixedName);
+          var namelc = fixedName.toLowerCase();
+          var noaccents = removeAccentsStr(namelc);
+          var nameUrl = slugify(noaccents);
           var link = `https://galtx-centex.org/greyhounds/${nameUrl}`;
           var img = `https://galtx-centex.org/img/thm/${nameUrl}.jpg`;
           var houndMeta = { name, link, img };
-          houndData.push(houndMeta)
+          houndDataCenTex.push(houndMeta)
         });
-        res.send(houndData);
+        res.send(houndDataCenTex);
       }
     });
   });

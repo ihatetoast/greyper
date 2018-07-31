@@ -6,8 +6,9 @@ describe("No accents", function () {
     function () {
       expect(noaccents("Göthe")).to.equal("Gothe")
     });
-  it("should do the same for uc letters (ex. Élin to Elin)",
+  it("should replace uc letters that have diacritical marks with ones without  (ex. Élin to Elin)",
     function () {
-      expect(noaccents("Göthe")).to.equal("Gothe")
+      expect(noaccents("Élin")).to.equal("Elin")
     });
+
 })

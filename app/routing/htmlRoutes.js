@@ -7,8 +7,6 @@ module.exports = function (app) {
   });
   //catch all: point to index
   app.get("*", function (request, response) {
-
+    response.sendFile(path.join(__dirname, "../public/index.html"));
   });
-
-
 };

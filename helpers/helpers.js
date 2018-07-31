@@ -3,7 +3,7 @@
 //   return "Boutros Boutros-Gali.";
 // }
 // get rid of accents for names like Zöe/Chlöe or Renée ...
-export function removeAccentsStr() {
+export function removeAccentsStr(str) {
   return str
     .replace(/Â|À|Å|Ã|Ä/g, "A")
     .replace(/â|à|å|ã|ä/g, "a")
