@@ -12,6 +12,8 @@ Building a scraper for images of greyhounds currently available.
 - NodeJS
 - Cheerio
 - Request
+- MochaJS
+- Chai
 
 ---
 Adoption groups to scrape (mebbeh):
