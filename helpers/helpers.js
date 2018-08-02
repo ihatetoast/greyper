@@ -56,3 +56,37 @@ export function deleteExtraText(str, arr) {
   return fixed;
 }
 
+//VAGA
+
+export function getVagaName(str) {
+  let noJunkName = str;
+  if (noJunkName.length < 1) {
+    noJunkName = '';
+  }
+  else if (noJunkName.slice(0, 3) === "DOB") {
+    noJunkName = '';
+  }
+  else if (noJunkName.slice(0, 9) === "Sponsored") {
+    noJunkName = '';
+  }
+  else if (noJunkName.slice(0, 10) === "Click Here") {
+    noJunkName = '';
+  }
+  else {
+    let nameArr = noJunkName.split('\"');
+    if (nameArr[2] === "") {
+      noJunkName = `Use this name until further notice: ${nameArr[1]}`
+    } else {
+      noJunkName = 'this has name. don\'t use it'
+    }
+    //split on quotation marks. get index 1
+    //right now this gives me 3 names. take the third until later
+    //sep fcn to delete the objects with empty name keys.
+    // noJunkName = nameArr[1]
+    return noJunkName;
+
+  }
+  return noJunkName;
+
+}
+
