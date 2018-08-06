@@ -7,6 +7,7 @@ module.exports = function(app) {
     <li>Greyhound Adoption League of Texas: /api/galt</li>
     <li>Greyhound Adoption League of Texas - Central Texas: /api/centex</li>
     <li>Virginia Greyhound Adoption (with GPA Greater Orlando): /api/vaga</li>
+    <li>Old Dominion (with GPA Greater Orlando): /api/vaga</li>
     </ul>
     `);
     console.log(yoYoMa());
