@@ -37,12 +37,36 @@ module.exports = function(app) {
             var img = $('.wp1link')
               .children()
               .html();
-            var houndMeta = { name, link, img };
+            var houndMeta = {
+              name,
+              link,
+              img
+            };
             console.log(houndMeta);
             houndDataVaga.push(houndMeta);
           }
         );
         res.send(houndDataVaga);
+      }
+    });
+  });
+  //OLD DOMINION GREYHOUND ADOPTION gets hounds from ALABAMA
+  //Alabama Greyhound Rescue and Adoption Center separates males from females by link. because everyone hates me.
+  app.get('/api/odga-males', function(req, res) {
+    request(`http://www.ohmygreyhounds.com/adoptable-males.html/`, function(
+      err,
+      response,
+      html
+    ) {
+      if (!err && response.statusCode == 200) {
+        // var $ = cheerio.load(html);
+        // var houndDataBrga = ['boop'];
+        console.log(html);
+        // $('').each(function(i, el) {
+        //   console.log(el);
+        //   //houndDataBrga.push(el);
+        // });
+        res.send(html);
       }
     });
   });
