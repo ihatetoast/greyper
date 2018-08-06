@@ -46,4 +46,30 @@ module.exports = function(app) {
       }
     });
   });
+  //OLD DOMINION gets hounds from alabama.
+  //alabama groups separates by males and females because everyone hates me.
+  app.get('/api/odga-males', function(req, res) {
+    request(`http://www.ohmygreyhounds.com/adoptable-males.html`, function(
+      err,
+      response,
+      html
+    ) {
+      if (!err && response.statusCode == 200) {
+        var $ = cheerio.load(html);
+        var houndDataOdgaM = [];
+        $('.wsite-section-elements').each(function(i, el) {
+          var nameData = $(el)
+            .find('.wsite-content-title')
+            .text();
+          var imgTextTail = $('.wsite-image a img').attr('src');
+          var img = `http://www.ohmygreyhounds.com${imgTextTail}`;
+          var link = 'http://www.ohmygreyhounds.com/adoptable-males.html';
+          var houndMeta = { nameData, img, link };
+          // console.log($('.wsite-image a img').attr('src'));
+          houndDataOdgaM.push(houndMeta);
+        });
+        res.send(houndDataOdgaM);
+      }
+    });
+  });
 };
