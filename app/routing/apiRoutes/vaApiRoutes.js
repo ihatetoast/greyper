@@ -91,7 +91,7 @@ module.exports = function(app) {
     ) {
       if (!err && response.statusCode == 200) {
         var $ = cheerio.load(html);
-        var houndDataOdgaM = [];
+        var houndDataOdgaF = [];
         $('.wsite-section-elements').each(function(i, el) {
           var nameData = $(el)
             .find('.wsite-content-title')
@@ -105,9 +105,40 @@ module.exports = function(app) {
             link
           };
           // console.log($('.wsite-image a img').attr('src'));
-          houndDataOdgaM.push(houndMeta);
+          houndDataOdgaF.push(houndMeta);
         });
-        res.send(houndDataOdgaM);
+        res.send(houndDataOdgaF);
+      }
+    });
+  });
+
+  //GREYHOUND WELFARE, INC
+  app.get('/api/gwi', function(req, res) {
+    request(`http://greyhoundwelfare.org/category/adoptable-dogs/`, function(
+      err,
+      response,
+      html
+    ) {
+      if (!err && response.statusCode == 200) {
+        var $ = cheerio.load(html);
+        var houndDataGreyWelfare = [];
+        $('article.category-adoptable-dogs').each(function(i, el) {
+          var nameData = $(el)
+            .children()
+            .find('.entry-title')
+            .text();
+          var link = $(el)
+            .find('a')
+            .attr('href');
+          var img = $(el)
+            .find('img')
+            .attr('src');
+          console.log(img);
+          var houndMeta = { nameData, link, img };
+          // console.log($('.wsite-image a img').attr('src'));
+          houndDataGreyWelfare.push(houndMeta);
+        });
+        res.send(houndDataGreyWelfare);
       }
     });
   });
